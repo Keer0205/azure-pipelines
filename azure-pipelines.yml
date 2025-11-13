@@ -1,0 +1,15 @@
+REPO 4 – azure-pipelines
+Description → Azure DevOps CI/CD YAML – zero-downtime (Quikr Ltd)
+→ Create → Add file → azure-pipelines.yml → paste:
+```yaml
+trigger: [ main ]
+pool: { vmImage: 'ubuntu-latest' }
+steps:
+- task: DotNetCoreCLI@2
+  inputs: { command: 'build', projects: '**/*.csproj' }
+- task: AzureFunctionApp@1
+  inputs:
+    azureSubscription: 'my-sub'
+    appName: 'finance-integration'
+    package: '$(Build.ArtifactStagingDirectory)'
+- script: echo "Deployed by Keerthana – 13 Nov 2025"
